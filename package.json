@@ -1,0 +1,20 @@
+{
+  "name": "solidjs-submit-form-naive-way",
+  "version": "0.0.0",
+  "description": "How to submit a form with SolidJS, in a rather naive way.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^2.5.7",
+    "vite-plugin-solid": "^2.0.3",
+    "typescript": "^4.4.3"
+  },
+  "dependencies": {
+    "solid-js": "^1.1.3"
+  },
+  "keywords": []
+}
