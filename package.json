@@ -1,7 +1,7 @@
 {
-  "name": "solidjs-submit-form-naive-way",
+  "name": "solidjs-submit-form-with-store",
   "version": "0.0.0",
-  "description": "How to submit a form with SolidJS, in a rather naive way.",
+  "description": "How to submit a form with solid-js, using a store for form data",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

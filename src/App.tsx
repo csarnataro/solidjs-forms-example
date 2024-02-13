@@ -1,49 +1,32 @@
 import "./App.css";
-import { Component, createEffect, createSignal } from "solid-js";
+import { Component, createEffect } from "solid-js";
+import { useForm } from "./useForm";
 
 const App: Component = () => {
-  const [name, setName] = createSignal("");
-  const [surname, setSurname] = createSignal("");
-  const [address, setAddress] = createSignal("");
-  const [shippingAddress, setShippingAddress] = createSignal("");
-  const [sameAsAddress, setSameAsAddress] = createSignal(false);
+  const { form, updateFormField, submit, clearField } = useForm();
 
   const handleSubmit = (event: Event): void => {
     event.preventDefault();
-    const dataToSubmit = {
-      name: name(),
-      surname: surname(),
-      address: address(),
-      shipping_address: sameAsAddress() ? null : shippingAddress()
-    };
-
-    // should be sending data via POST request...
-    console.log(`submitting ${JSON.stringify(dataToSubmit)}`);
+    submit(form);
   };
 
   createEffect(() => {
-    if (sameAsAddress()) {
-      setShippingAddress("");
+    if (form.sameAsAddress) {
+      clearField("shippingAddress");
     }
   });
 
   return (
     <div class="App">
-      <h1>Submitting a form with SolidJS, the naive way</h1>
-      <p>
-        For a more Solid solution, check out{" "}
-        <a href="https://codesandbox.io/s/solidjs-submit-form-with-store-6kh4c?file=/src/App.tsx">
-          this companion sandbox
-        </a>
-      </p>
+      <h1>Submitting a form using SolidJS stores</h1>
       <form onSubmit={handleSubmit}>
         <div class="form-control">
           <label for="name">Name:</label>
           <input
             type="text"
             id="name"
-            value={name()}
-            onChange={(e) => setName(e.currentTarget.value)}
+            value={form.name}
+            onChange={updateFormField("name")}
           />
         </div>
         <div class="form-control">
@@ -51,8 +34,8 @@ const App: Component = () => {
           <input
             type="text"
             id="surname"
-            value={surname()}
-            onChange={(e) => setSurname(e.currentTarget.value)}
+            value={form.surname}
+            onChange={updateFormField("surname")}
           />
         </div>
         <div class="form-control">
@@ -60,8 +43,8 @@ const App: Component = () => {
           <input
             type="text"
             id="address"
-            value={address()}
-            onChange={(e) => setAddress(e.currentTarget.value)}
+            value={form.address}
+            onChange={updateFormField("address")}
           />
         </div>
         <div class="form-control">
@@ -69,8 +52,8 @@ const App: Component = () => {
           <input
             type="checkbox"
             id="same-address"
-            checked={sameAsAddress()}
-            onChange={(e) => setSameAsAddress(e.currentTarget.checked)}
+            checked={form.sameAsAddress}
+            onChange={updateFormField("sameAsAddress")}
           />
         </div>
         <div class="form-control">
@@ -78,14 +61,15 @@ const App: Component = () => {
           <input
             type="text"
             id="shipping-address"
-            value={shippingAddress()}
-            disabled={sameAsAddress()}
-            readonly={sameAsAddress()}
-            onChange={(e) => setShippingAddress(e.currentTarget.value)}
+            value={form.shippingAddress}
+            disabled={form.sameAsAddress}
+            readonly={form.sameAsAddress}
+            onChange={updateFormField("shippingAddress")}
           />
         </div>
         <input class="form-submit" type="submit" value="Submit order" />
       </form>
+      <pre>{JSON.stringify(form, null, 2)}</pre>
     </div>
   );
 };
